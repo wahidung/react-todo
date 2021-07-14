@@ -2,24 +2,39 @@ import React, { useState } from 'react';
 import Todo from './../components/Todo';
 import Header from './../layouts/Header';
 import { Redirect } from 'react-router-dom';
-import firebase from 'firebase';
-import { db } from './../config/firebase';
+import { URL, KEY } from './../config/db';
+import axios from 'axios';
 
 function AddTask() {
   const [redirect, setRedirect] = useState(false);
   const [todo, setTodo] = useState();
+  const [loading, setLoading] = useState(true);
 
   const saveTask = e => {
     e.preventDefault();
+    const color = ['blue', 'red', 'orange', 'yellow'];
+    const randomColor = color[Math.floor(Math.random() * color.length)];
 
-    db.collection('todo').add({
-      name: user.displayName,
-      checked: false,
-      timestamp: firebase.firestore.FieldValue.serverTimestamp()
-    });
+    let data = {
+      name: todo,
+      color: randomColor,
+      is_checked: false
+    };
+
+    axios
+      .post(URL, JSON.stringify(data), {
+        headers: {
+          'content-type': 'application/json',
+          'x-apikey': KEY,
+          'cache-control': 'no-cache'
+        }
+      })
+      .then(res => {
+        setRedirect(true);
+      });
 
     setTodo('');
-    setRedirect(true);
+    // setRedirect(true);
   };
 
   if (redirect) {
