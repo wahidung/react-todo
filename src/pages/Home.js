@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
-import Todo from './../components/Todo';
-import Header from './../layouts/Header';
-import { URL, KEY } from './../config/db';
-import ContentLoader from 'react-content-loader';
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
+import Todo from "./../components/Todo";
+import Header from "./../layouts/Header";
+import { URL, KEY } from "./../config/db";
+import ContentLoader from "react-content-loader";
 
 function Home() {
   const [loading, setLoading] = useState(true);
@@ -15,12 +15,12 @@ function Home() {
       axios
         .get(URL, {
           headers: {
-            'content-type': 'application/json',
-            'x-apikey': KEY,
-            'cache-control': 'no-cache'
-          }
+            "content-type": "application/json",
+            "x-apikey": KEY,
+            "cache-control": "no-cache",
+          },
         })
-        .then(res => {
+        .then((res) => {
           setList(res.data);
           setLoading(false);
         });
@@ -33,7 +33,7 @@ function Home() {
   return (
     <div>
       <Header title="Board" rightIcon={true} />
-      <div className="p-3">
+      <div className="p-3 scrollbar">
         {loading ? (
           <ContentLoader
             speed={2}
@@ -49,9 +49,15 @@ function Home() {
           </ContentLoader>
         ) : (
           <div>
-            <div className="todos">
-              {list.map(data => (
-                <Todo key={data.id} title={data.name} color={data.color} />
+            <div className="todos overflow">
+              {list.map((data) => (
+                <Todo
+                  key={data._id}
+                  id={data._id}
+                  title={data.name}
+                  color={data.color}
+                  checked={data.is_checked}
+                />
               ))}
             </div>
             <div className="bottom">
