@@ -23,7 +23,6 @@ function Home() {
         .then(res => {
           setList(res.data);
           setLoading(false);
-          console.log('loading false');
         });
     }
 

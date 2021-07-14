@@ -8,10 +8,11 @@ import axios from 'axios';
 function AddTask() {
   const [redirect, setRedirect] = useState(false);
   const [todo, setTodo] = useState();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const saveTask = e => {
     e.preventDefault();
+    setLoading(true);
     const color = ['blue', 'red', 'orange', 'yellow'];
     const randomColor = color[Math.floor(Math.random() * color.length)];
 
@@ -30,10 +31,11 @@ function AddTask() {
         }
       })
       .then(res => {
+        setTodo('');
         setRedirect(true);
+        setLoading(false);
       });
 
-    setTodo('');
     // setRedirect(true);
   };
 
@@ -59,9 +61,19 @@ function AddTask() {
             />
           </div>
           <div className="bottom">
-            <button type="submit" className="btn btn-success btn-block">
-              Create a Task
-            </button>
+            {loading ? (
+              <button
+                type="submit"
+                className="btn btn-success btn-block"
+                disabled
+              >
+                Process Saving ...
+              </button>
+            ) : (
+              <button type="submit" className="btn btn-success btn-block">
+                Create a Task
+              </button>
+            )}
           </div>
         </form>
       </div>
