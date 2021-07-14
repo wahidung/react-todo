@@ -117,3 +117,8 @@
   opacity: 1;
   transition: opacity 250ms ease-in;
 }
+
+.form-control {
+  background: #f9f9f9 !important;
+  border: none !important;
+}
