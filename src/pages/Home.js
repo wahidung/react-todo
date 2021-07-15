@@ -74,6 +74,7 @@ function Home() {
         },
       })
       .then((res) => {
+        setLoading(true);
         // console.log(res);
       });
   };
