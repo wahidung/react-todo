@@ -1,37 +1,37 @@
-import React, { useState } from 'react';
-import Todo from './../components/Todo';
-import Header from './../layouts/Header';
-import { Redirect } from 'react-router-dom';
-import { URL, KEY } from './../config/db';
-import axios from 'axios';
+import React, { useState } from "react";
+import Todo from "./../components/Todo";
+import Header from "./../layouts/Header";
+import { Redirect } from "react-router-dom";
+import { URL, KEY } from "./../config/db";
+import axios from "axios";
 
 function AddTask() {
   const [redirect, setRedirect] = useState(false);
   const [todo, setTodo] = useState();
   const [loading, setLoading] = useState(false);
 
-  const saveTask = e => {
+  const saveTask = (e) => {
     e.preventDefault();
     setLoading(true);
-    const color = ['blue', 'red', 'orange', 'yellow'];
+    const color = ["blue", "red", "orange", "yellow"];
     const randomColor = color[Math.floor(Math.random() * color.length)];
 
     let data = {
       name: todo,
       color: randomColor,
-      is_checked: false
+      isChecked: false,
     };
 
     axios
       .post(URL, JSON.stringify(data), {
         headers: {
-          'content-type': 'application/json',
-          'x-apikey': KEY,
-          'cache-control': 'no-cache'
-        }
+          "content-type": "application/json",
+          "x-api-key": KEY,
+          "cache-control": "no-cache",
+        },
       })
-      .then(res => {
-        setTodo('');
+      .then((res) => {
+        setTodo("");
         setRedirect(true);
         setLoading(false);
       });
@@ -55,7 +55,7 @@ function AddTask() {
               type="text"
               className="form-control"
               placeholder="Belajar hal baru"
-              onChange={e => setTodo(e.target.value)}
+              onChange={(e) => setTodo(e.target.value)}
               value={todo}
               required
             />

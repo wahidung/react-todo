@@ -12,22 +12,22 @@ function Home() {
 
   useEffect(() => {
     async function fetchMyAPI() {
-      axios
-        .get(URL, {
-          headers: {
-            "content-type": "application/json",
-            "x-apikey": KEY,
-            "cache-control": "no-cache",
-          },
-        })
-        .then((res) => {
-          setList(res.data);
-          setLoading(false);
-        });
+      let res = await axios.get(URL, {
+        headers: {
+          "content-type": "application/json",
+          "x-api-key": KEY,
+          "cache-control": "no-cache",
+        },
+      });
+
+      if (res.status == 200) {
+        setList(res.data.nodes);
+        setLoading(false);
+      }
     }
 
     fetchMyAPI();
-  });
+  }, []);
 
   // Declare a new state variable, which we'll call "count"
   return (
@@ -52,11 +52,11 @@ function Home() {
             <div className="todos overflow">
               {list.map((data) => (
                 <Todo
-                  key={data._id}
-                  id={data._id}
+                  key={data.id}
+                  id={data.id}
                   title={data.name}
                   color={data.color}
-                  checked={data.is_checked}
+                  checked={data.isChecked}
                 />
               ))}
             </div>

@@ -10,14 +10,14 @@ function Todo({ id, title, color, checked }) {
 
   const updateChecked = (e) => {
     let data = {
-      is_checked: e.target.checked,
+      isChecked: e.target.checked,
     };
 
     axios
-      .put(URL + `/` + e.target.id, JSON.stringify(data), {
+      .patch(URL + `/` + e.target.id, JSON.stringify(data), {
         headers: {
           "content-type": "application/json",
-          "x-apikey": KEY,
+          "x-api-key": KEY,
           "cache-control": "no-cache",
         },
       })
@@ -31,7 +31,7 @@ function Todo({ id, title, color, checked }) {
       .delete(URL + `/` + e.item, {
         headers: {
           "content-type": "application/json",
-          "x-apikey": KEY,
+          "x-api-key": KEY,
           "cache-control": "no-cache",
         },
       })
@@ -42,7 +42,7 @@ function Todo({ id, title, color, checked }) {
 
   return (
     <SwipeToDelete onDelete={deleteTodo} key={id} item={id}>
-      <div className="p-3 bg-white">
+      <div className="p-3 bg-white border-light">
         <div className={`todo ` + color}>
           {checked ? (
             <input id={id} type="checkbox" onChange={updateChecked} checked />
