@@ -12,7 +12,7 @@ function Home() {
 
   useEffect(() => {
     async function fetchMyAPI() {
-      let res = await axios.get(URL, {
+      let res = await axios.get(URL + `?$by.isChecked=asc`, {
         headers: {
           "content-type": "application/json",
           "x-api-key": KEY,
@@ -33,6 +33,23 @@ function Home() {
   return (
     <div>
       <Header title="Board" rightIcon={true} />
+      <ul class="nav tab nav-fill">
+        <li class="nav-item">
+          <a class="nav-link active" href="#">
+            All
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">
+            Completed
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">
+            Uncompleted
+          </a>
+        </li>
+      </ul>
       <div className="p-3 scrollbar">
         {loading ? (
           <ContentLoader
