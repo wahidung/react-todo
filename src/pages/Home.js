@@ -135,8 +135,8 @@ function Home() {
                 ))}
               </div>
             ) : (
-              <div className="empty text-center pt-5 mt-5">
-                <IoSadOutline className="icon-sad mt-5" />
+              <div className="empty text-center pt-5 mt-3">
+                <IoSadOutline className="icon-sad" />
                 <p>Todo is empty</p>
               </div>
             )}
