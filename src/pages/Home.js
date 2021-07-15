@@ -6,6 +6,9 @@ import Header from "./../layouts/Header";
 import { URL, KEY } from "./../config/db";
 import ContentLoader from "react-content-loader";
 import { Nav } from "react-bootstrap";
+import { IoSadOutline } from "react-icons/io5";
+
+IoSadOutline;
 
 function Home() {
   const [first, setFirst] = useState(true);
@@ -117,19 +120,27 @@ function Home() {
           </ContentLoader>
         ) : (
           <div>
-            <div className="todos overflow">
-              {list.map((data) => (
-                <Todo
-                  key={data.id}
-                  id={data.id}
-                  title={data.name}
-                  color={data.color}
-                  checked={data.isChecked}
-                  updateChecked={updateChecked}
-                  deleteTodo={deleteTodo}
-                />
-              ))}
-            </div>
+            {list.length != 0 ? (
+              <div className="todos overflow">
+                {list.map((data) => (
+                  <Todo
+                    key={data.id}
+                    id={data.id}
+                    title={data.name}
+                    color={data.color}
+                    checked={data.isChecked}
+                    updateChecked={updateChecked}
+                    deleteTodo={deleteTodo}
+                  />
+                ))}
+              </div>
+            ) : (
+              <div className="empty text-center pt-5 mt-5">
+                <IoSadOutline className="icon-sad mt-5" />
+                <p>Todo is empty</p>
+              </div>
+            )}
+
             <div className="bottom">
               <Link to="/add" className="btn btn-success btn-block">
                 Add a Task
