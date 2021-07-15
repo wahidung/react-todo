@@ -44,12 +44,12 @@ function Todo({ id, title, color, checked }) {
     <SwipeToDelete onDelete={deleteTodo} key={id} item={id}>
       <div className="p-3 bg-white border-light">
         <div className={`todo ` + color}>
-          {checked ? (
-            <input id={id} type="checkbox" onChange={updateChecked} checked />
-          ) : (
-            <input id={id} type="checkbox" onChange={updateChecked} />
-          )}
-
+          <input
+            id={id}
+            type="checkbox"
+            onChange={updateChecked}
+            defaultChecked={checked}
+          />
           <label for={id}>{title}</label>
         </div>
       </div>
