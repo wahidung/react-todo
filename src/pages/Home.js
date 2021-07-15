@@ -5,14 +5,26 @@ import Todo from "./../components/Todo";
 import Header from "./../layouts/Header";
 import { URL, KEY } from "./../config/db";
 import ContentLoader from "react-content-loader";
+import { Nav } from "react-bootstrap";
 
 function Home() {
+  const [first, setFirst] = useState(true);
   const [loading, setLoading] = useState(true);
   const [list, setList] = useState([]);
+  const [filter, setFilter] = useState("all");
 
   useEffect(() => {
+    let newUrl = "";
+    if (filter == "all") {
+      newUrl = URL + `allTodo/rows?$by.isChecked=asc`;
+    } else if (filter == "completed") {
+      newUrl = URL + `filterTodo/rows?isChecked=true`;
+    } else {
+      newUrl = URL + `filterTodo/rows?isChecked=false`;
+    }
+
     async function fetchMyAPI() {
-      let res = await axios.get(URL + `?$by.isChecked=asc`, {
+      let res = await axios.get(newUrl, {
         headers: {
           "content-type": "application/json",
           "x-api-key": KEY,
@@ -22,36 +34,75 @@ function Home() {
 
       if (res.status == 200) {
         setList(res.data.nodes);
+        setFirst(false);
         setLoading(false);
       }
     }
 
     fetchMyAPI();
-  }, []);
+  }, [filter, loading]);
+
+  const updateChecked = (e) => {
+    let data = {
+      isChecked: e.target.checked,
+    };
+
+    axios
+      .patch(URL + `allTodo/rows/` + e.target.id, JSON.stringify(data), {
+        headers: {
+          "content-type": "application/json",
+          "x-api-key": KEY,
+          "cache-control": "no-cache",
+        },
+      })
+      .then((res) => {
+        setLoading(true);
+        // console.log(res);
+      });
+  };
+
+  const deleteTodo = (e) => {
+    axios
+      .delete(URL + `allTodo/rows/` + e.item, {
+        headers: {
+          "content-type": "application/json",
+          "x-api-key": KEY,
+          "cache-control": "no-cache",
+        },
+      })
+      .then((res) => {
+        // console.log(res);
+      });
+  };
+
+  const filterTodo = (selected) => {
+    setFirst(true);
+    setList([]);
+    setFilter(selected);
+  };
 
   // Declare a new state variable, which we'll call "count"
   return (
     <div>
       <Header title="Board" rightIcon={true} />
-      <ul class="nav tab nav-fill">
-        <li class="nav-item">
-          <a class="nav-link active" href="#">
-            All
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">
-            Completed
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">
-            Uncompleted
-          </a>
-        </li>
-      </ul>
+      <Nav
+        className="tab nav-fill"
+        defaultActiveKey="all"
+        as="ul"
+        onSelect={filterTodo}
+      >
+        <Nav.Item as="li">
+          <Nav.Link eventKey="all">All</Nav.Link>
+        </Nav.Item>
+        <Nav.Item as="li">
+          <Nav.Link eventKey="completed">Completed</Nav.Link>
+        </Nav.Item>
+        <Nav.Item as="li">
+          <Nav.Link eventKey="uncompleted">Uncompleted</Nav.Link>
+        </Nav.Item>
+      </Nav>
       <div className="p-3 scrollbar">
-        {loading ? (
+        {first ? (
           <ContentLoader
             speed={2}
             width={400}
@@ -74,6 +125,8 @@ function Home() {
                   title={data.name}
                   color={data.color}
                   checked={data.isChecked}
+                  updateChecked={updateChecked}
+                  deleteTodo={deleteTodo}
                 />
               ))}
             </div>

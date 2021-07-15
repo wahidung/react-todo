@@ -23,7 +23,7 @@ function AddTask() {
     };
 
     axios
-      .post(URL, JSON.stringify(data), {
+      .post(URL + "allTodo/rows", JSON.stringify(data), {
         headers: {
           "content-type": "application/json",
           "x-api-key": KEY,
