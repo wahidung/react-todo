@@ -7,6 +7,8 @@ import { URL, KEY } from "./../config/db";
 import ContentLoader from "react-content-loader";
 import { Nav } from "react-bootstrap";
 import { IoSadOutline } from "react-icons/io5";
+import { useRecoilState } from "recoil";
+import { theme } from "../store";
 
 IoSadOutline;
 
@@ -15,6 +17,7 @@ function Home() {
   const [loading, setLoading] = useState(true);
   const [list, setList] = useState([]);
   const [filter, setFilter] = useState("all");
+  const [currentTheme, setCurrentTheme] = useRecoilState(theme);
 
   useEffect(() => {
     let newUrl = "";
@@ -87,7 +90,7 @@ function Home() {
 
   // Declare a new state variable, which we'll call "count"
   return (
-    <div>
+    <div className={currentTheme}>
       <Header title="Board" rightIcon={true} />
       <Nav
         className="tab nav-fill"

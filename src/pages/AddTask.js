@@ -4,11 +4,14 @@ import Header from "./../layouts/Header";
 import { Redirect } from "react-router-dom";
 import { URL, KEY } from "./../config/db";
 import axios from "axios";
+import { useRecoilState } from "recoil";
+import { theme } from "../store";
 
 function AddTask() {
   const [redirect, setRedirect] = useState(false);
   const [todo, setTodo] = useState();
   const [loading, setLoading] = useState(false);
+  const [currentTheme, setCurrentTheme] = useRecoilState(theme);
 
   const saveTask = (e) => {
     e.preventDefault();
@@ -45,7 +48,7 @@ function AddTask() {
 
   // Declare a new state variable, which we'll call "count"
   return (
-    <div>
+    <div className={currentTheme}>
       <Header title="Add task" back={true} rightIcon={false} />
       <div className="p-3">
         <form onSubmit={saveTask}>

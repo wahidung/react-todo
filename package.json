@@ -15,7 +15,8 @@
     "react-flip-move": "3.0.4",
     "react-icons": "4.2.0",
     "react-router-dom": "5.2.0",
-    "react-swipe-to-delete-component": "^0.5.5"
+    "react-swipe-to-delete-component": "^0.5.5",
+    "recoil": "^0.3.1"
   },
   "scripts": {
     "start": "react-scripts start",

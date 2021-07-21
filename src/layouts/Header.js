@@ -1,8 +1,28 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { FiSearch, FiBell, FiMenu, FiChevronLeft } from 'react-icons/fi';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import {
+  FiSearch,
+  FiBell,
+  FiMenu,
+  FiChevronLeft,
+  FiMoon,
+  FiSun,
+} from "react-icons/fi";
+import { useRecoilState } from "recoil";
+import { theme } from "../store";
 
 function Header({ title, back, rightIcon }) {
+  const [currentTheme, setCurrentTheme] = useRecoilState(theme);
+
+  const changeTheme = () => {
+    if (currentTheme == "light") {
+      setCurrentTheme("dark");
+    } else {
+      setCurrentTheme("light");
+    }
+    console.log(theme);
+  };
+
   // Declare a new state variable, which we'll call "count"
   return (
     <div>
@@ -22,7 +42,13 @@ function Header({ title, back, rightIcon }) {
             {title}
           </a>
           <div className="">
-            <a href="#" className="text-dark mr-3 icon">
+            <a href="#" className="text-dark mr-3 icon" onClick={changeTheme}>
+              {currentTheme == "light" ? <FiMoon /> : <FiSun />}
+            </a>
+            <a href="#" className="text-dark icon">
+              <FiMenu />
+            </a>
+            {/* <a href="#" className="text-dark mr-3 icon">
               <FiSearch />
             </a>
             <a href="#" className="text-dark mr-3 icon">
@@ -30,7 +56,7 @@ function Header({ title, back, rightIcon }) {
             </a>
             <a href="#" className="text-dark icon">
               <FiMenu />
-            </a>
+            </a> */}
           </div>
         </nav>
       )}
