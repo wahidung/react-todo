@@ -1,3 +1,5 @@
-# react-fttjjq
+Simple React Todo list
 
-[Edit on StackBlitz ⚡️](https://stackblitz.com/edit/react-fttjjq)
+https://react-todo-whd.netlify.app/
+
+![ScreenShot](https://i.postimg.cc/909BCB8V/react-todo-whd-netlify-app-Pixel-2.png) ![ScreenShot](https://i.postimg.cc/NMSx3nxp/react-todo-whd-netlify-app-Pixel-2-1.png)
